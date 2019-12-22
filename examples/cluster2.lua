@@ -30,6 +30,10 @@ skynet.start(function()
 		--cluster node [db] is down
 		print(pcall(cluster.call, "db", "@sdb", "GET", "a"))	-- db is down
 	end)
+	--[[
+		__nowaiting 等于false 意味着,挂起一个向不存在的结点发送的信息,直到该结点地址被更新
+		如果为true则关闭这种挂起行为,或者明确指定某结点的地址为false,标记该结点已经下线
+	]]
 	cluster.reload { __nowaiting = false }
 	local pingserver = cluster.snax("db3", "pingserver")
 	print(pingserver.req.ping "hello")
